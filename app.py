@@ -187,6 +187,7 @@ try:
             "Distance (km)": km,
             "Status": flight.get("flight_status") or "Unknown",
             "Arrival delay (min)": delay,
+            "Delay source": delay_source,
             "Scheduled arrival": arrival.get("scheduled"),
             "Warning": (
                 "Check delay"
