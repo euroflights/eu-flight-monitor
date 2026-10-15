@@ -88,7 +88,7 @@ def load_flights(api_key):
         params={
             "access_key": api_key,
             "limit": 100,
-            "dep_iata": "LHR",
+            "dep_iata": "CDG",
         },
         timeout=30,
     )
