@@ -135,9 +135,10 @@ try:
 
         origin = departure.get("iata")
         destination = arrival.get("iata")
+
         # Only monitor flights between airports in our EU list.
         if origin not in AIRPORTS or destination not in AIRPORTS:
-        continue
+            continue
 
         km = distance_km(origin, destination)
 
