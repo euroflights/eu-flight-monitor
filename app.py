@@ -134,8 +134,13 @@ try:
         details = flight.get("flight") or {}
 
         origin = departure.get("iata")
-        destination = arrival.get("iata")
-        km = distance_km(origin, destination)
+destination = arrival.get("iata")
+
+# Only monitor flights between airports in our EU list.
+if origin not in AIRPORTS or destination not in AIRPORTS:
+    continue
+
+km = distance_km(origin, destination)
 
         # Only show routes whose airport coordinates are known.
         if km is None or km < min_distance:
