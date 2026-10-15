@@ -147,7 +147,7 @@ try:
             continue
 
         delay = arrival.get("delay")
-
+        st.write("Arrival data check:", arrival)
         # Calculate delay if the API doesn't provide it directly.
         delay_source = "Reported by API"
 
