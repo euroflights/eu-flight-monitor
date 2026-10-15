@@ -148,6 +148,38 @@ try:
 
         delay = arrival.get("delay")
 
+        # Calculate delay if the API doesn't provide it directly.
+        delay_source = "Reported by API"
+
+        if not isinstance(delay, (int, float)):
+            scheduled = arrival.get("scheduled")
+            actual = arrival.get("actual")
+            estimated = arrival.get("estimated")
+            comparison = actual or estimated
+
+            if scheduled and comparison:
+                try:
+                    scheduled_time = pd.to_datetime(
+                        scheduled, utc=True
+                    )
+                    comparison_time = pd.to_datetime(
+                        comparison, utc=True
+                    )
+                    delay = round(
+                        (comparison_time - scheduled_time)
+                        .total_seconds() / 60
+                    )
+                    delay_source = (
+                        "Calculated from actual arrival"
+                        if actual
+                        else "Calculated from estimated arrival"
+                    )
+                except (ValueError, TypeError):
+                    delay = None
+
+        if not isinstance(delay, (int, float)):
+            delay_source = "Unavailable"
+
         rows.append({
             "Flight": details.get("iata") or "Unknown",
             "Airline": airline.get("name") or "Unknown",
